@@ -4,12 +4,14 @@ import (
 	"crypto"
 	"fmt"
 	"io"
+	"os"
 
 	sv "github.com/google/go-sev-guest/verify"
 	tv "github.com/google/go-tdx-guest/verify"
 	pb "github.com/google/go-tpm-tools/proto/attest"
 	"github.com/google/go-tpm-tools/server"
 	"github.com/google/go-tpm/legacy/tpm2"
+	"github.com/google/logger"
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/proto"
 )
@@ -86,6 +88,7 @@ var debugCmd = &cobra.Command{
 }
 
 func init() {
+	logger.Init("", false, false, os.Stderr)
 	RootCmd.AddCommand(verifyCmd)
 	verifyCmd.AddCommand(debugCmd)
 	addNonceFlag(debugCmd)
